@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Trivia Quiz - My Simple Projects</title>
+    <style>
+        {
+            font-family: 'Noto Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #question {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            padding: 10px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            background-color: #f9f9f9;
+        }
+
+        #score {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const questionElement = document.getElementById('question');
+            const optionsContainer = document.getElementById('options');
+            const scoreElement = document.getElementById('score');
+
+            const quizData = [
+                {
+                    question: 'What is the capital of France?',
+                    options: ['Berlin', 'Madrid', 'Paris', 'Rome'],
+                    correctAnswer: 'Paris'
+                },
+                {
+                    question: 'Which planet is known as the Red Planet?',
+                    options: ['Earth', 'Mars', 'Venus', 'Jupiter'],
+                    correctAnswer: 'Mars'
+                },
+                {
+                    question: 'What is the largest mammal?',
+                    options: ['Elephant', 'Blue Whale', 'Giraffe', 'Hippopotamus'],
+                    correctAnswer: 'Blue Whale'
+                }
+                
+            ];
+
+            let currentQuestionIndex = 0;
+            let score = 0;
+
+            
+            function loadQuestion() {
+                const currentQuestion = quizData[currentQuestionIndex];
+
+                questionElement.textContent = currentQuestion.question;
+
+                optionsContainer.innerHTML = '';
+                currentQuestion.options.forEach((option, index) => {
+                    const optionElement = document.createElement('div');
+                    optionElement.classList.add('option');
+                    optionElement.textContent = option;
+                    optionElement.addEventListener('click', () => handleOptionClick(index));
+                    optionsContainer.appendChild(optionElement);
+                });
+
+                scoreElement.textContent = `Score: ${score}`;
+            }
+
+            function handleOptionClick(index) {
+                const currentQuestion = quizData[currentQuestionIndex];
+
+                if (currentQuestion.options[index] === currentQuestion.correctAnswer) {
+                    score++;
+                }
+
+                currentQuestionIndex++;
+
+                if (currentQuestionIndex < quizData.length) {
+                    loadQuestion();
+                } else {
+                    // Quiz is finished
+                    questionElement.textContent = 'Quiz finished!';
+                    optionsContainer.innerHTML = '';
+                    scoreElement.textContent = `Final Score: ${score}`;
+                }
+            }
+
+          
+            loadQuestion();
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Trivia Quiz</h1>
+        <div id="question"></div>
+        <div class="options" id="options"></div>
+        <p id="score"></p>
+    </div>
+</body>
+
+</html>
